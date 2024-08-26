@@ -18,7 +18,8 @@ if (searchedValue === '') {
     position: 'topLeft',
     });
     return;
-}
+    }
+    
 
 function showLoader() {
     loader.classList.remove('is-hidden');
@@ -28,11 +29,12 @@ function hideLoader() {
 }
 
 showLoader();
-setTimeout(hideLoader, 300);
+setTimeout(hideLoader, 6000);
 
 fetchPhotos(searchedValue)
     .then(data => {
-    if (!data.hits.length) {
+        loader.classList.add('is-hidden');
+    if (!data.hits.length === 0) {
     iziToast.error({
         title: 'Error',
         message:'Sorry, there are no images matching your search query. Please try again!',
@@ -41,7 +43,7 @@ fetchPhotos(searchedValue)
         galleryEl.innerHTML = '';
 
         return;
-    }
+        }
 
     const galleryCardsTemplate = data.hits
         .map(imgDetails => createGalleryCardTemplate(imgDetails))
